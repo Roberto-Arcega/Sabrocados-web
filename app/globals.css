@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background colors */
+  --background: #0A0A0A;
+  --surface: #1A1A1A;
+  --surface-light: #2A2A2A;
+
+  /* Primary colors */
+  --primary: #F97316;
+  --primary-hover: #EA580C;
+  --primary-light: #FDBA74;
+
+  /* Text colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+
+  /* Border */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.05);
+
+  /* Status colors */
+  --success: #22C55E;
+  --danger: #EF4444;
+
+  /* Card gradients */
+  --gradient-warm-start: #F97316;
+  --gradient-warm-end: #FDBA74;
+  --card-pink-start: #FDA4AF;
+  --card-pink-end: #FB7185;
+
+  /* Foreground for compatibility */
+  --foreground: #FFFFFF;
 }
 
 @theme inline {
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-light: var(--surface-light);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Background gradient effects */
+.bg-gradient-radial {
+  background: radial-gradient(circle at var(--gradient-x, 50%) var(--gradient-y, 50%), var(--gradient-color) 0%, transparent 50%);
+}
+
+/* Warm corner gradients for the landing page */
+.bg-warm-corners {
+  position: relative;
+}
+
+.bg-warm-corners::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 0% 0%, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 50% at 100% 100%, rgba(253, 186, 116, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Glass effect for cards */
+.glass {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* Pink gradient for balance card */
+.bg-pink-gradient {
+  background: linear-gradient(135deg, var(--card-pink-start) 0%, var(--card-pink-end) 100%);
+}
+
+/* Warm gradient for accents */
+.bg-warm-gradient {
+  background: linear-gradient(135deg, var(--gradient-warm-start) 0%, var(--gradient-warm-end) 100%);
 }
