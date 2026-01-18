@@ -1,124 +1,141 @@
 "use client";
 
 import { useState } from "react";
-import Button from "./Button";
+import Image from "next/image";
 
 const navLinks = [
   { name: "Home", href: "#", active: true },
-  { name: "AI Features", href: "#features" },
-  { name: "Resources", href: "#resources" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
+  { name: "Productos", href: "#productos" },
+  { name: "Beneficios Nutricionales", href: "#beneficios" },
+  { name: "Experiencias", href: "#experiencias" },
+  { name: "Contacto", href: "#contacto" },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <svg
-              className="h-5 w-5 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+    <header className="fixed top-0 left-0 right-0 z-50">
+      {/* Main navbar container */}
+      <div className="relative">
+        {/* Background bar for navigation - transparent to show gradient */}
+        <div className="absolute inset-0 bg-transparent" />
+
+        {/* Content wrapper */}
+        <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="flex items-center">
+
+            {/* Logo Section - Left aligned */}
+            <a
+              href="#"
+              className="group relative flex items-center py-3 shrink-0"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
+              {/* Warm glow effect behind logo on hover */}
+              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-amber-600/20 via-orange-500/10 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+              {/* Logo image */}
+              <Image
+                src="/sabrocados-logo.png"
+                alt="Sabrocados"
+                width={320}
+                height={100}
+                className="relative h-20 w-auto drop-shadow-[0_2px_10px_rgba(180,120,60,0.3)] transition-transform duration-500 group-hover:scale-105 lg:h-24"
+                priority
               />
-            </svg>
+            </a>
+
+            {/* Desktop Navigation - Centered */}
+            <nav className="hidden lg:flex flex-1 justify-center">
+              <ul className="flex items-center gap-1">
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className={`
+                        relative px-5 py-2.5 text-sm font-medium tracking-wide
+                        transition-all duration-300 rounded-full
+                        ${link.active
+                          ? "text-emerald-400"
+                          : "text-neutral-400 hover:text-white"
+                        }
+                      `}
+                    >
+                      {/* Active indicator background */}
+                      {link.active && (
+                        <span className="absolute inset-0 rounded-full bg-emerald-500/15 border border-emerald-500/20" />
+                      )}
+
+                      {/* Hover background */}
+                      <span className="absolute inset-0 rounded-full bg-white/0 hover:bg-white/5 transition-colors duration-300" />
+
+                      <span className="relative">{link.name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* Right spacer to balance logo width - keeps nav centered */}
+            <div className="hidden lg:block w-[200px] shrink-0" />
+
+            {/* Mobile Menu Button */}
+            <button
+              className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white lg:hidden transition-colors hover:bg-white/10 ml-auto"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <div className="relative w-5 h-4 flex flex-col justify-between">
+                <span
+                  className={`block h-0.5 w-full bg-current transform transition-all duration-300 origin-center ${
+                    mobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""
+                  }`}
+                />
+                <span
+                  className={`block h-0.5 w-full bg-current transition-all duration-300 ${
+                    mobileMenuOpen ? "opacity-0 scale-0" : ""
+                  }`}
+                />
+                <span
+                  className={`block h-0.5 w-full bg-current transform transition-all duration-300 origin-center ${
+                    mobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""
+                  }`}
+                />
+              </div>
+            </button>
           </div>
-          <span className="text-xl font-bold text-text-primary">Sabrocados</span>
-        </a>
-
-        {/* Desktop Navigation */}
-        <ul className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                className={`relative text-sm transition-colors ${
-                  link.active
-                    ? "text-text-primary"
-                    : "text-text-muted hover:text-text-secondary"
-                }`}
-              >
-                {link.name}
-                {link.active && (
-                  <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
-                )}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Auth Buttons */}
-        <div className="hidden items-center gap-4 md:flex">
-          <Button variant="ghost" size="sm">
-            Log in
-          </Button>
-          <Button variant="primary" size="sm">
-            Sign up
-          </Button>
         </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-text-primary md:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
-        </button>
-      </nav>
+      </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="border-t border-border bg-background px-6 py-4 md:hidden">
-          <ul className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <li key={link.name}>
+      <div
+        className={`
+          lg:hidden overflow-hidden transition-all duration-500 ease-out
+          ${mobileMenuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}
+        `}
+      >
+        <div className="bg-[#0A0A0A]/98 backdrop-blur-xl border-b border-white/5 px-4 py-6">
+          <ul className="flex flex-col gap-2">
+            {navLinks.map((link, index) => (
+              <li
+                key={link.name}
+                style={{
+                  transitionDelay: mobileMenuOpen ? `${index * 50}ms` : "0ms"
+                }}
+                className={`
+                  transform transition-all duration-300
+                  ${mobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"}
+                `}
+              >
                 <a
                   href={link.href}
-                  className={`block py-2 text-base ${
-                    link.active
-                      ? "text-text-primary"
-                      : "text-text-muted hover:text-text-secondary"
-                  }`}
+                  className={`
+                    block rounded-xl px-5 py-4 text-base font-medium
+                    transition-all duration-300
+                    ${link.active
+                      ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20"
+                      : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                    }
+                  `}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
@@ -126,16 +143,8 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex flex-col gap-3">
-            <Button variant="ghost" size="md" className="w-full">
-              Log in
-            </Button>
-            <Button variant="primary" size="md" className="w-full">
-              Sign up
-            </Button>
-          </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
