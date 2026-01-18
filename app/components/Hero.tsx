@@ -8,9 +8,9 @@ export default function Hero() {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6">
-      {/* Content Container - removed max-w constraint for more space */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 mx-auto w-full max-w-[1400px]">
+    <section className="relative flex flex-col items-center pt-20 lg:pt-24 pb-12 px-6">
+      {/* Content Container */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mx-auto w-full max-w-[1400px]">
 
         {/* Text Content - smaller flex to give image more room */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:w-[40%] shrink-0">
@@ -68,7 +68,7 @@ export default function Hero() {
               alt="Sabrocados - Snacks de Cerdo Salsas Negras"
               width={900}
               height={900}
-              className="w-[85vw] max-w-none h-auto scale-125 sm:scale-110 md:w-[70vw] md:scale-100 lg:w-auto lg:max-w-full lg:h-[500px] xl:h-[580px] 2xl:h-[650px] object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
+              className="w-[85vw] max-w-none h-auto scale-125 sm:scale-110 md:w-[70vw] md:scale-100 lg:w-auto lg:max-w-full lg:h-[450px] xl:h-[500px] 2xl:h-[550px] object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
               priority
             />
           </div>
@@ -77,6 +77,7 @@ export default function Hero() {
 
       {/* Bottom decorative elements */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+
     </section>
   );
 }
