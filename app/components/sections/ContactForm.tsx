@@ -90,7 +90,7 @@ export default function ContactForm() {
   const errorClasses = "text-danger text-sm mt-1";
 
   return (
-    <section id="formulario" className="section-padding px-6">
+    <section id="contacto" className="section-padding px-6">
       <div className="mx-auto max-w-3xl">
         <SectionHeading
           title="Contáctanos"

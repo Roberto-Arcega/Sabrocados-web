@@ -11,7 +11,7 @@ const ingredients = [
 
 export default function FlavorProfile() {
   return (
-    <section id="ingredientes" className="section-padding px-6 relative overflow-hidden">
+    <section id="productos" className="section-padding px-6 relative overflow-hidden">
       {/* Background accent */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 

@@ -1,21 +1,25 @@
 import { test, expect, devices } from "@playwright/test";
 
-test.describe("Mobile Responsiveness - iPhone 12", () => {
-  test.use({ ...devices["iPhone 12"] });
+// iPhone 12 Tests
+const iPhone12 = test.extend({
+  ...devices["iPhone 12"],
+});
 
-  test("page loads correctly on mobile", async ({ page }) => {
+iPhone12.describe("Mobile Responsiveness - iPhone 12", () => {
+  iPhone12("page loads correctly on mobile", async ({ page }) => {
     await page.goto("/");
 
-    // Logo should be visible
-    await expect(page.getByAltText("Sabrocados")).toBeVisible();
+    // Logo should be visible in header
+    const header = page.getByRole("banner");
+    await expect(header.getByRole("link", { name: "Sabrocados" })).toBeVisible();
 
     // Mobile menu button should be visible
     await expect(page.getByRole("button", { name: /toggle menu/i })).toBeVisible();
   });
 
-  test("contact form is fully usable on mobile", async ({ page }) => {
+  iPhone12("contact form is fully usable on mobile", async ({ page }) => {
     await page.goto("/");
-    await page.locator("#formulario").scrollIntoViewIfNeeded();
+    await page.locator("#contacto").scrollIntoViewIfNeeded();
 
     // Fill form
     await page.getByLabel(/nombre completo/i).fill("Test Mobile User");
@@ -29,7 +33,7 @@ test.describe("Mobile Responsiveness - iPhone 12", () => {
     await expect(page.getByRole("button", { name: /enviar por whatsapp/i })).toBeVisible();
   });
 
-  test("FAQ section works on mobile", async ({ page }) => {
+  iPhone12("FAQ section works on mobile", async ({ page }) => {
     await page.goto("/");
     await page.locator("#faq").scrollIntoViewIfNeeded();
 
@@ -42,7 +46,7 @@ test.describe("Mobile Responsiveness - iPhone 12", () => {
     await expect(page.getByText(/2g de carbohidratos/i)).toBeVisible();
   });
 
-  test("testimonials display correctly on mobile", async ({ page }) => {
+  iPhone12("testimonials display correctly on mobile", async ({ page }) => {
     await page.goto("/");
 
     // Testimonials section exists
@@ -52,7 +56,7 @@ test.describe("Mobile Responsiveness - iPhone 12", () => {
     await expect(page.getByText("Carlos M.")).toBeVisible();
   });
 
-  test("mobile navigation works correctly", async ({ page }) => {
+  iPhone12("mobile navigation works correctly", async ({ page }) => {
     await page.goto("/");
 
     // Open mobile menu
@@ -69,19 +73,23 @@ test.describe("Mobile Responsiveness - iPhone 12", () => {
   });
 });
 
-test.describe("Mobile Responsiveness - Pixel 5", () => {
-  test.use({ ...devices["Pixel 5"] });
+// Pixel 5 Tests
+const pixel5 = test.extend({
+  ...devices["Pixel 5"],
+});
 
-  test("page loads correctly on Android", async ({ page }) => {
+pixel5.describe("Mobile Responsiveness - Pixel 5", () => {
+  pixel5("page loads correctly on Android", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByAltText("Sabrocados")).toBeVisible();
+    const header = page.getByRole("banner");
+    await expect(header.getByRole("link", { name: "Sabrocados" })).toBeVisible();
     await expect(page.getByRole("button", { name: /toggle menu/i })).toBeVisible();
   });
 
-  test("form inputs are properly sized for touch", async ({ page }) => {
+  pixel5("form inputs are properly sized for touch", async ({ page }) => {
     await page.goto("/");
-    await page.locator("#formulario").scrollIntoViewIfNeeded();
+    await page.locator("#contacto").scrollIntoViewIfNeeded();
 
     const nameInput = page.getByLabel(/nombre completo/i);
     const phoneInput = page.getByLabel(/teléfono/i);
@@ -97,21 +105,23 @@ test.describe("Mobile Responsiveness - Pixel 5", () => {
   });
 });
 
+// Tablet Tests
 test.describe("Tablet Responsiveness - iPad", () => {
   test.use({ viewport: { width: 768, height: 1024 } });
 
   test("page displays correctly on tablet", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByAltText("Sabrocados")).toBeVisible();
+    const header = page.getByRole("banner");
+    await expect(header.getByRole("link", { name: "Sabrocados" })).toBeVisible();
   });
 
   test("form layout adapts to tablet width", async ({ page }) => {
     await page.goto("/");
-    await page.locator("#formulario").scrollIntoViewIfNeeded();
+    await page.locator("#contacto").scrollIntoViewIfNeeded();
 
     // Form should be visible with proper layout
-    const formSection = page.locator("#formulario");
+    const formSection = page.locator("#contacto");
     await expect(formSection).toBeVisible();
 
     // Fields should be properly spaced
@@ -120,13 +130,15 @@ test.describe("Tablet Responsiveness - iPad", () => {
   });
 });
 
+// Large Desktop Tests
 test.describe("Large Desktop", () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
   test("page displays correctly on large screen", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByAltText("Sabrocados")).toBeVisible();
+    const header = page.getByRole("banner");
+    await expect(header.getByRole("link", { name: "Sabrocados" })).toBeVisible();
 
     // Desktop navigation should be visible
     const nav = page.getByRole("navigation");

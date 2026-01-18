@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 
 const navLinks = [
@@ -13,6 +13,29 @@ const navLinks = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+
+    if (href === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        const headerOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }
+
+    setMobileMenuOpen(false);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -51,6 +74,7 @@ export default function Header() {
                   <li key={link.name}>
                     <a
                       href={link.href}
+                      onClick={(e) => handleNavClick(e, link.href)}
                       className={`
                         relative px-5 py-2.5 text-sm font-medium tracking-wide
                         transition-all duration-300 rounded-full
@@ -136,7 +160,7 @@ export default function Header() {
                       : "text-neutral-300 hover:bg-white/5 hover:text-white"
                     }
                   `}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.href)}
                 >
                   {link.name}
                 </a>

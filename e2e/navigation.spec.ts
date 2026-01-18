@@ -6,7 +6,8 @@ test.describe("Navigation", () => {
   });
 
   test("displays the logo", async ({ page }) => {
-    await expect(page.getByAltText("Sabrocados")).toBeVisible();
+    const header = page.getByRole("banner");
+    await expect(header.getByRole("link", { name: "Sabrocados" })).toBeVisible();
   });
 
   test("displays all desktop navigation links", async ({ page, isMobile }) => {
@@ -42,17 +43,18 @@ test.describe("Navigation", () => {
     // Click on Contacto link
     await nav.getByRole("link", { name: /contacto/i }).click();
 
-    // Wait for scroll
-    await page.waitForTimeout(500);
+    // Wait for smooth scroll animation to complete
+    await page.waitForTimeout(1000);
 
     // Check that the form section is in view
     const formSection = page.locator("#contacto");
-    await expect(formSection).toBeInViewport();
+    await expect(formSection).toBeInViewport({ timeout: 5000 });
   });
 
   test("logo links to home", async ({ page }) => {
-    const logo = page.getByAltText("Sabrocados").locator("..");
-    await expect(logo).toHaveAttribute("href", "#");
+    const header = page.getByRole("banner");
+    const logoLink = header.getByRole("link", { name: "Sabrocados" });
+    await expect(logoLink).toHaveAttribute("href", "#");
   });
 });
 
