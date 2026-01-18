@@ -6,7 +6,7 @@ import Image from "next/image";
 const navLinks = [
   { name: "Home", href: "#", active: true },
   { name: "Productos", href: "#productos" },
-  { name: "Beneficios Nutricionales", href: "#beneficios" },
+  { name: "Nutrición", href: "#nutricion" },
   { name: "Experiencias", href: "#experiencias" },
   { name: "Contacto", href: "#contacto" },
 ];
