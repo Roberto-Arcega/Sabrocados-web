@@ -30,7 +30,7 @@ export default function FlavorProfile() {
           </div>
 
           {/* Central badge */}
-          <div className="relative z-10 inline-flex flex-col items-center justify-center w-48 h-48 rounded-full bg-gradient-to-br from-primary to-primary-hover shadow-2xl shadow-primary/30">
+          <div className="relative z-10 inline-flex flex-col items-center justify-center w-48 h-48 rounded-full bg-gradient-to-br from-amber-950 to-stone-900 border-2 border-primary/50 shadow-[0_0_60px_rgba(249,115,22,0.4)]">
             <span className="text-6xl">🔥</span>
             <span className="mt-2 text-sm font-bold text-white uppercase tracking-wider">
               Sabor Único

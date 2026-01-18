@@ -6,9 +6,9 @@ import FlavorProfile from "./components/sections/FlavorProfile";
 import UseCasesSection from "./components/sections/UseCasesSection";
 import TestimonialsSection from "./components/sections/TestimonialsSection";
 import FAQSection from "./components/sections/FAQSection";
+import ContactForm from "./components/sections/ContactForm";
 import FinalCTA from "./components/sections/FinalCTA";
 import Footer from "./components/Footer";
-import WhatsAppButton from "./components/ui/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -22,10 +22,10 @@ export default function Home() {
         <UseCasesSection />
         <TestimonialsSection />
         <FAQSection />
+        <ContactForm />
         <FinalCTA />
       </main>
       <Footer />
-      <WhatsAppButton />
     </div>
   );
 }

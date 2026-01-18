@@ -5,19 +5,19 @@ const useCases = [
   {
     title: "Reuniones",
     description: "El snack perfecto para compartir con amigos y familia",
-    image: "/hero-image.jpeg",
+    image: "/product-3.PNG",
     icon: "🎉",
   },
   {
     title: "Aventuras",
     description: "Energía portable que no necesita refrigeración",
-    image: "/hero-image.jpeg",
+    image: "/product-2.PNG",
     icon: "⛰️",
   },
   {
     title: "Viajes",
     description: "Tu compañero ideal en cada carretera",
-    image: "/hero-image.jpeg",
+    image: "/product-1.PNG",
     icon: "🚗",
   },
 ];
