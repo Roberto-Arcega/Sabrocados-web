@@ -2,21 +2,17 @@
 
 import { useState } from "react";
 import SectionHeading from "../ui/SectionHeading";
-
-const WHATSAPP_NUMBER = "524775775959";
+import { validateName, validatePhone, validateEmail } from "@/lib/validation";
+import {
+  ContactFormData,
+  SOURCE_OPTIONS,
+  generateWhatsAppUrl,
+  generateWhatsAppMessage,
+} from "@/lib/whatsapp";
 
 type FormState = "idle" | "submitting" | "success";
 
-interface FormData {
-  nombre: string;
-  telefono: string;
-  email: string;
-  comoNosConociste: string;
-  cantidad: string;
-  mensaje: string;
-}
-
-const initialFormData: FormData = {
+const initialFormData: ContactFormData = {
   nombre: "",
   telefono: "",
   email: "",
@@ -25,35 +21,27 @@ const initialFormData: FormData = {
   mensaje: "",
 };
 
-const sourceOptions = [
-  { value: "", label: "Selecciona una opción" },
-  { value: "instagram", label: "Instagram" },
-  { value: "facebook", label: "Facebook" },
-  { value: "recomendacion", label: "Recomendación" },
-  { value: "google", label: "Google" },
-  { value: "otro", label: "Otro" },
-];
-
 export default function ContactForm() {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formData, setFormData] = useState<ContactFormData>(initialFormData);
   const [formState, setFormState] = useState<FormState>("idle");
-  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [errors, setErrors] = useState<Partial<ContactFormData>>({});
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
+    const newErrors: Partial<ContactFormData> = {};
 
-    if (!formData.nombre.trim()) {
-      newErrors.nombre = "El nombre es requerido";
+    const nombreError = validateName(formData.nombre);
+    if (nombreError) {
+      newErrors.nombre = nombreError;
     }
 
-    if (!formData.telefono.trim()) {
-      newErrors.telefono = "El teléfono es requerido";
-    } else if (!/^\d{10}$/.test(formData.telefono.replace(/\s/g, ""))) {
-      newErrors.telefono = "Ingresa un teléfono válido de 10 dígitos";
+    const telefonoError = validatePhone(formData.telefono);
+    if (telefonoError) {
+      newErrors.telefono = telefonoError;
     }
 
-    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Ingresa un email válido";
+    const emailError = validateEmail(formData.email);
+    if (emailError) {
+      newErrors.email = emailError;
     }
 
     setErrors(newErrors);
@@ -66,37 +54,9 @@ export default function ContactForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
-    if (errors[name as keyof FormData]) {
+    if (errors[name as keyof ContactFormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
-  };
-
-  const generateWhatsAppMessage = (): string => {
-    const sourceLabel = sourceOptions.find(
-      (opt) => opt.value === formData.comoNosConociste
-    )?.label;
-
-    let message = `¡Hola! Me gustaría ordenar Sabrocados.\n\n`;
-    message += `*Nombre:* ${formData.nombre}\n`;
-    message += `*Teléfono:* ${formData.telefono}\n`;
-
-    if (formData.email) {
-      message += `*Email:* ${formData.email}\n`;
-    }
-
-    if (sourceLabel && formData.comoNosConociste) {
-      message += `*¿Cómo nos conocí?:* ${sourceLabel}\n`;
-    }
-
-    if (formData.cantidad) {
-      message += `*Cantidad:* ${formData.cantidad}\n`;
-    }
-
-    if (formData.mensaje) {
-      message += `\n*Mensaje:*\n${formData.mensaje}`;
-    }
-
-    return message;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -108,8 +68,8 @@ export default function ContactForm() {
 
     setFormState("submitting");
 
-    const message = generateWhatsAppMessage();
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const message = generateWhatsAppMessage(formData);
+    const whatsappUrl = generateWhatsAppUrl(message);
 
     // Small delay for UX
     setTimeout(() => {
@@ -245,7 +205,7 @@ export default function ContactForm() {
                     onChange={handleChange}
                     className={inputClasses}
                   >
-                    {sourceOptions.map((option) => (
+                    {SOURCE_OPTIONS.map((option) => (
                       <option
                         key={option.value}
                         value={option.value}
