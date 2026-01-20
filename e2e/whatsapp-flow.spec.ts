@@ -145,8 +145,8 @@ test.describe("WhatsApp Flow", () => {
 
       await newPage.close();
 
-      // Wait for form reset before next iteration
-      await page.waitForTimeout(4000);
+      // Wait for form to reset (success state disappears and form fields are visible again)
+      await page.getByLabel(/nombre completo/i).waitFor({ state: "visible", timeout: 10000 });
     }
   });
 });
