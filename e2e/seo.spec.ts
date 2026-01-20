@@ -250,27 +250,27 @@ test.describe("SEO - sitemap.xml", () => {
 });
 
 test.describe("SEO - Manifest", () => {
-  test("manifest is accessible", async ({ page }) => {
-    const response = await page.goto("/manifest.webmanifest");
-    expect(response?.status()).toBe(200);
+  test("manifest is accessible", async ({ request }) => {
+    const response = await request.get("/manifest.webmanifest");
+    expect(response.status()).toBe(200);
   });
 
-  test("manifest has correct app name", async ({ page }) => {
-    const response = await page.goto("/manifest.webmanifest");
-    const content = await response?.json();
+  test("manifest has correct app name", async ({ request }) => {
+    const response = await request.get("/manifest.webmanifest");
+    const content = await response.json();
     expect(content.name).toContain("Sabrocados");
     expect(content.short_name).toBe("Sabrocados");
   });
 
-  test("manifest has correct theme color", async ({ page }) => {
-    const response = await page.goto("/manifest.webmanifest");
-    const content = await response?.json();
+  test("manifest has correct theme color", async ({ request }) => {
+    const response = await request.get("/manifest.webmanifest");
+    const content = await response.json();
     expect(content.theme_color).toBe("#10b981");
   });
 
-  test("manifest includes icons", async ({ page }) => {
-    const response = await page.goto("/manifest.webmanifest");
-    const content = await response?.json();
+  test("manifest includes icons", async ({ request }) => {
+    const response = await request.get("/manifest.webmanifest");
+    const content = await response.json();
     expect(content.icons).toBeDefined();
     expect(content.icons.length).toBeGreaterThan(0);
   });
